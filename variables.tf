@@ -1,10 +1,12 @@
 variable "name" {}
 variable "env" {}
+
 variable "parameters" {
   type = map(string)
 }
+
 variable "global_parameters" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
@@ -20,14 +22,6 @@ variable "global_secrets" {
   default     = []
 }
 
-variable "volume" {
-  default = {}
-}
-
-variable "efs_mount_point" {
-  default = "/mnt/efs"
-}
-
 variable "public_subnets" {
   type        = list(any)
   description = "VPC Public subnets to place SLS resources"
@@ -40,9 +34,28 @@ variable "private_subnets" {
   default     = []
 }
 
+variable "security_groups" {
+  type        = list(any)
+  description = "Security groups to assign to SLS"
+  default     = []
+}
+
 variable "vpc_id" {
   type        = string
   description = "AWS VPC ID"
-  default = ""
+  default     = ""
 }
 
+locals {
+  private_subnets = {for k, v in var.private_subnets : length(var.private_subnets) > 1 ? "private_subnet_${k + 1}" : "private_subnet" => v}
+  public_subnets  = {for k, v in var.public_subnets : length(var.public_subnets) > 1 ? "public_subnet_${k + 1}" : "public_subnet" => v}
+  security_groups = {for k, v in var.security_groups : length(var.security_groups) > 1 ? "security_group_${k + 1}" : "security_group" => v}
+
+  parameters = merge(
+    var.parameters,
+    local.public_subnets,
+    local.private_subnets,
+    local.security_groups,
+    var.vpc_id != "" ? { vpc_id = var.vpc_id } : {}
+  )
+}
