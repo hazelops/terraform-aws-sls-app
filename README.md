@@ -6,7 +6,7 @@ Terraform module to create AWS Serverless application.
 ```terraform
 module "pecan" {
   name            = "pecan"
-  source          = "hazelops/sls-app"
+  source          = "hazelops/sls-app/aws"
   env             = var.env
   vpc_id          = module.vpc.vpc_id
   public_subnets  = module.vpc.public_subnets
