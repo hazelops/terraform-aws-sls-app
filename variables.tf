@@ -56,6 +56,6 @@ locals {
     local.public_subnets,
     local.private_subnets,
     local.security_groups,
-    var.vpc_id != "" ? { vpc_id = var.vpc_id } : {}
+    { vpc_id = var.vpc_id }
   )
 }
