@@ -43,7 +43,7 @@ variable "security_groups" {
 variable "vpc_id" {
   type        = string
   description = "AWS VPC ID"
-  default     = ""
+  default     = "-"
 }
 
 locals {
