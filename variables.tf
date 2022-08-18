@@ -46,16 +46,8 @@ variable "vpc_id" {
   default     = "-"
 }
 
-locals {
-  private_subnets = {for k, v in var.private_subnets : length(var.private_subnets) > 1 ? "private_subnet_${k + 1}" : "private_subnet" => v}
-  public_subnets  = {for k, v in var.public_subnets : length(var.public_subnets) > 1 ? "public_subnet_${k + 1}" : "public_subnet" => v}
-  security_groups = {for k, v in var.security_groups : length(var.security_groups) > 1 ? "security_group_${k + 1}" : "security_group" => v}
-
-  parameters = merge(
-    var.parameters,
-    local.public_subnets,
-    local.private_subnets,
-    local.security_groups,
-    { vpc_id = var.vpc_id }
-  )
+variable "serialize_lists" {
+  type        = bool
+  description = "Whether to serialize lists like subnets and security groups into a one SSM parameter"
+  default     = true
 }
