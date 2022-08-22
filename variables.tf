@@ -51,3 +51,9 @@ variable "serialize_lists" {
   description = "Whether to serialize lists like subnets and security groups into a one SSM parameter"
   default     = true
 }
+
+variable "join_lists" {
+  type        = bool
+  description = "Whether to join lists like subnets and security groups into a one SSM parameter string with comma separator"
+  default     = false
+}
