@@ -2,12 +2,14 @@ variable "name" {}
 variable "env" {}
 
 variable "parameters" {
-  type = map(string)
+  type        = map(string)
+  description = "Map of SSM ParameterStore parameters to store - by default, /$var.env/$var.name/*"
 }
 
 variable "global_parameters" {
-  type    = map(string)
-  default = {}
+  type        = map(string)
+  description = "Map of SSM ParameterStore global parameters to store - by default, /$var.env/global/*"
+  default     = {}
 }
 
 variable "app_secrets" {

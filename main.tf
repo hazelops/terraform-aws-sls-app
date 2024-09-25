@@ -3,9 +3,8 @@ resource "aws_ssm_parameter" "sls_parameter" {
 
   name = "/${var.env}/${var.name}/${each.key}"
 
-  value     = each.value
-  type      = "String"
-  overwrite = true
+  value = each.value
+  type  = "String"
 }
 
 resource "aws_ssm_parameter" "sls_global_parameter" {
@@ -13,9 +12,8 @@ resource "aws_ssm_parameter" "sls_global_parameter" {
 
   name = "/${var.env}/global/${each.key}"
 
-  value     = each.value
-  type      = "String"
-  overwrite = true
+  value = each.value
+  type  = "String"
 }
 
 module "secrets" {
